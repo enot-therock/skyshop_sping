@@ -47,4 +47,5 @@ public class StorageService {
     public Collection<Searchable> SearchableResult() {
         return Stream.concat(productMap.values().stream(), articleMap.values().stream()).toList();
     }
+
 }

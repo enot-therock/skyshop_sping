@@ -34,10 +34,4 @@ public class ShopController extends StorageService {
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
     }
 
-//    @GetMapping("/search")
-//    public Collection<SearchResult> getSearchResult(@RequestParam("pattern") String pattern) {
-//        return Stream.concat(getAllArticles().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())),
-//                        getAllProducts().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())))
-//                .collect(Collectors.toCollection(() -> new ArrayList<>()));
-//    }
 }

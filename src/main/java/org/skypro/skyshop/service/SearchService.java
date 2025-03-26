@@ -22,4 +22,5 @@ public class SearchService {
                 .filter(v -> v.searchableName().toLowerCase().contains(searchText.toLowerCase()))
                 .collect(Collectors.toCollection(() -> new ArrayList<>()));
     }
+
 }
