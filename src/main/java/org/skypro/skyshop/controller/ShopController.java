@@ -15,23 +15,29 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RestController
-public class ShopController extends StorageService {
+public class ShopController {
+
+    private final SearchService searchService;
+    private final StorageService storageService;
+
+    public ShopController() {
+        this.searchService = new SearchService();
+        this.storageService = new StorageService();
+    }
 
     @GetMapping("/products")
     public Collection<Product> getAllProducts() {
-        return getProductMap();
+        return storageService.getProductMap();
     }
 
     @GetMapping("/article")
     public Collection<Article> getAllArticles() {
-        return getArticleMap();
+        return storageService.getArticleMap();
     }
 
     @GetMapping("/search")
     public Collection<SearchResult> getSearchResult(@RequestParam("pattern") String pattern) {
-        return Stream.concat(getAllArticles().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())),
-                getAllProducts().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+        return searchService.search(pattern);
     }
 
 }

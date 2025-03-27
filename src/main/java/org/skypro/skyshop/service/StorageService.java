@@ -44,7 +44,7 @@ public class StorageService {
         return articleMap.values().stream().toList();
     }
 
-    public Collection<Searchable> SearchableResult() {
+    public Collection<Searchable> SearchableStorage() {
         return Stream.concat(productMap.values().stream(), articleMap.values().stream()).toList();
     }
 
