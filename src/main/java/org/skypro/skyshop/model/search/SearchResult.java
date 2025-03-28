@@ -1,5 +1,7 @@
 package org.skypro.skyshop.model.search;
 
+import org.springframework.stereotype.Service;
+
 import java.util.UUID;
 
 public class SearchResult {
