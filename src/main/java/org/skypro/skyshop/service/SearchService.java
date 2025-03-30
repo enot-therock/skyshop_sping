@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,8 +19,10 @@ public class SearchService {
     }
 
     public Collection<SearchResult> search(String searchText) {
-        return storageService.SearchableResult().stream()
+        return storageService.SearchableStorage().stream()
                 .filter(v -> v.searchableName().toLowerCase().contains(searchText.toLowerCase()))
-                .collect(Collectors.toCollection(() -> new ArrayList<>()));
+                .map(SearchResult::fromSearchable)
+                .collect(Collectors.toCollection(ArrayList::new));
     }
+
 }
