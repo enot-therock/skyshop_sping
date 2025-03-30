@@ -39,5 +39,4 @@ public class ShopController {
     public Collection<SearchResult> getSearchResult(@RequestParam("pattern") String pattern) {
         return searchService.search(pattern);
     }
-
 }

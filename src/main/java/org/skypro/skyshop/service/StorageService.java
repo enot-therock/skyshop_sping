@@ -48,7 +48,7 @@ public class StorageService {
         return Stream.concat(productMap.values().stream(), articleMap.values().stream()).toList();
     }
 
-//    public Optional<Product> getProductById(UUID id) {
-//        return Optional.ofNullable(availableProducts.get(id));
-//    }
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(productMap.get(id));
+    }
 }
