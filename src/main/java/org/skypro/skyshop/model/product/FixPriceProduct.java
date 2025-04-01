@@ -15,6 +15,11 @@ public class FixPriceProduct extends Product implements Comparable<Searchable> {
     }
 
     @Override
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
     public int getPrice() {
         return FIX_PRICE;
     }

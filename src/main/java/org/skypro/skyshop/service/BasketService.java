@@ -1,9 +1,14 @@
 package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.basket.ProductBasket;
+import org.skypro.skyshop.model.product.Product;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class BasketService {
@@ -23,4 +28,12 @@ public class BasketService {
             productBasket.addProductBasket(id);
         }
     }
+
+    public UserBasket getUserBasket() {
+        return productBasket.allProducts().entrySet().stream()
+                .map(m -> new BasketItem(storageService.getProductById(m.getKey()), m.getValue()))
+                .collect(Collectors.toCollection(() -> new HashMap<>(UserBasket)));
+    }
 }
+
+
