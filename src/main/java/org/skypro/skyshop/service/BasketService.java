@@ -32,7 +32,7 @@ public class BasketService {
     public UserBasket getUserBasket() {
         return productBasket.allProducts().entrySet().stream()
                 .map(m -> new BasketItem(storageService.getProductById(m.getKey()), m.getValue()))
-                .collect(Collectors.toCollection(() -> new HashMap<>(UserBasket)));
+                .collect(Collectors.toList());
     }
 }
 

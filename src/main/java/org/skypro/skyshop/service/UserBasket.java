@@ -1,6 +1,9 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.model.product.Product;
+
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class UserBasket {
 
@@ -9,9 +12,9 @@ public class UserBasket {
 
     public UserBasket(List<BasketItem> basketItem) {
         this.basketItem = basketItem;
-    }
-
-    int total = basketItem.stream()
-                .mapToInt(p -> p.getAmount() * p.getProducts().getPrice())
+        this.total = basketItem.stream()
+                .map(p -> p.getProducts().stream().mapToInt(Product::getPrice))
+                .mapToInt(IntStream::sum)
                 .sum();
+    }
 }
