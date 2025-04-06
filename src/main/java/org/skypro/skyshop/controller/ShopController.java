@@ -1,8 +1,10 @@
 package org.skypro.skyshop.controller;
 
 import org.skypro.skyshop.model.article.Article;
+import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.search.SearchResult;
+import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
 import org.skypro.skyshop.service.UserBasket;
@@ -13,17 +15,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
 
 @RestController
 public class ShopController {
 
     private final SearchService searchService;
     private final StorageService storageService;
+    private final BasketService basketService;
 
-    public ShopController() {
+    public ShopController(BasketService basketService) {
+        this.basketService = basketService;
         this.searchService = new SearchService();
         this.storageService = new StorageService();
     }
@@ -40,18 +46,27 @@ public class ShopController {
 
     @GetMapping("/search")
     public Collection<SearchResult> getSearchResult(@RequestParam("pattern") String pattern) {
+        Stream.concat(getAllArticles().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())),
+                getAllProducts().stream().filter(v -> v.searchableName().contains(pattern.toLowerCase())))
+                .collect(Collectors.toCollection(ArrayList::new));
         return searchService.search(pattern);
     }
 
     @GetMapping("/basket/{id}")
     public String addProduct(@PathVariable("id") UUID id) {
-        return storageService.getProductMap().stream()
-                .filter(p -> p.getId(id))
-                .toList() + " - продукт успешно добавлен";
+        basketService.addBasket(id);
+        return "Продукт " + id + " успешно добавлен";
     }
 
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
-        return getUserBasket();
+        return basketService.getUserBasket();
+    }
+
+    @GetMapping("/id")
+    public void idd() {
+        Stream.concat(getAllProducts().stream().map(p -> p.getId()),
+                        getAllArticles().stream().map(v -> v.getId()))
+                .forEach(System.out::println);  // - метод, чтобы смотреть рандомные id
     }
 }

@@ -30,8 +30,12 @@ public class BasketService {
     }
 
     public UserBasket getUserBasket() {
-        return productBasket.allProducts().entrySet().stream()
-                .map(m -> new BasketItem(storageService.getProductById(m.getKey()), m.getValue()))
+        return (UserBasket)
+                productBasket.allProducts().entrySet().stream()
+                .map(m -> {
+                    Product product = storageService.getProductById(m.getKey()).orElseThrow();
+                    return new BasketItem(product, m.getValue());
+                })
                 .collect(Collectors.toList());
     }
 }

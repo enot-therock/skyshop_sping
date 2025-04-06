@@ -13,8 +13,8 @@ public class UserBasket {
     public UserBasket(List<BasketItem> basketItem) {
         this.basketItem = basketItem;
         this.total = basketItem.stream()
-                .map(p -> p.getProducts().stream().mapToInt(Product::getPrice))
-                .mapToInt(IntStream::sum)
+                .map(BasketItem::getProducts)
+                .mapToInt(Product::getPrice)
                 .sum();
     }
 }
