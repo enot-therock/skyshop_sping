@@ -44,7 +44,12 @@ public class StorageService {
         return articleMap.values().stream().toList();
     }
 
-    public Collection<Searchable> SearchableResult() {
+    public Collection<Searchable> SearchableStorage() {
         return Stream.concat(productMap.values().stream(), articleMap.values().stream()).toList();
     }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(productMap.get(id));
+    }
+
 }

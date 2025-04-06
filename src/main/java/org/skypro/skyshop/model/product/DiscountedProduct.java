@@ -24,6 +24,11 @@ public class DiscountedProduct extends Product implements Comparable<Searchable>
     }
 
     @Override
+    public UUID getId() {
+        return id;
+    }
+
+    @Override
     public int getPrice() {
         return (int) (basePrice - basePrice * discount/100);
     }
