@@ -1,5 +1,6 @@
 package org.skypro.skyshop.controller;
 
+import org.skypro.skyshop.error.NoSuchProductException;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.product.Product;
@@ -65,8 +66,6 @@ public class ShopController {
 
     @GetMapping("/id")
     public void idd() {
-        Stream.concat(getAllProducts().stream().map(p -> p.getId()),
-                        getAllArticles().stream().map(v -> v.getId()))
-                .forEach(System.out::println);  // - метод, чтобы смотреть рандомные id
+        System.out.println(storageService.allPrintProduct());  // метод отображения id
     }
 }

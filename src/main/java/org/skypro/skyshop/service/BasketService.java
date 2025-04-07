@@ -1,5 +1,6 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.error.NoSuchProductException;
 import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,8 @@ public class BasketService {
         return (UserBasket)
                 productBasket.allProducts().entrySet().stream()
                 .map(m -> {
-                    Product product = storageService.getProductById(m.getKey()).orElseThrow();
+                    Product product = storageService.getProductById(m.getKey())
+                            .orElseThrow(NoSuchProductException::new);
                     return new BasketItem(product, m.getValue());
                 })
                 .collect(Collectors.toList());

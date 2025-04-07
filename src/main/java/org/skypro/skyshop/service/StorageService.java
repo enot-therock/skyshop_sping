@@ -9,6 +9,7 @@ import org.skypro.skyshop.model.search.Searchable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
@@ -50,6 +51,10 @@ public class StorageService {
 
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(productMap.get(id));
+    }
+
+    public List<UUID> allPrintProduct() {
+        return new ArrayList<>(productMap.keySet());  // метод для отображения id
     }
 
 }
