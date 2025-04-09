@@ -9,6 +9,11 @@ public class ShopControllerAdvice {
 
     @ExceptionHandler(NoSuchProductException.class)
     public ResponseEntity<ShopError> noSuchProductException(NoSuchProductException e) {
-        return ResponseEntity.noContent().build();
+        ShopError shopError = new ShopError("404", e.getMessage());
+        if (e.getMessage().contains("Такого продукта нет")) {
+            return ResponseEntity.badRequest().body(shopError);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

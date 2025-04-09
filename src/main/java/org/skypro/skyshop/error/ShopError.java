@@ -10,7 +10,7 @@ public class ShopError {
         this.message = message;
     }
 
-    public String shopErrorException(String code, String message) {
+    public String shopErrorException() {
         return "Ошибка " + code + " " + message;
     }
 }
