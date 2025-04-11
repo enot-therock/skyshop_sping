@@ -2,7 +2,6 @@ package org.skypro.skyshop.controller;
 
 import org.skypro.skyshop.error.NoSuchProductException;
 import org.skypro.skyshop.model.article.Article;
-import org.skypro.skyshop.model.basket.ProductBasket;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.service.BasketService;

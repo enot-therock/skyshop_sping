@@ -23,8 +23,8 @@ public class BasketService {
     }
 
     public void addBasket(UUID id) {
-        if (storageService.getProductById(id).isPresent()) {
-            throw new IllegalArgumentException("Такой товар уже есть");
+        if (!storageService.getProductById(id).isPresent()) {
+            throw new NoSuchProductException();
         } else {
             productBasket.addProductBasket(id);
         }
