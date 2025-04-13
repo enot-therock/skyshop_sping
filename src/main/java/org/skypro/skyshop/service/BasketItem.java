@@ -2,9 +2,6 @@ package org.skypro.skyshop.service;
 
 import org.skypro.skyshop.model.product.Product;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class BasketItem {
 
     private final Product products;

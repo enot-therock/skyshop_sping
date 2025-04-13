@@ -15,26 +15,41 @@ import java.util.stream.Stream;
 @Service
 public class StorageService {
 
-    private Map<UUID, Product> productMap = new HashMap<>();
-    private Map<UUID, Article> articleMap = new HashMap<>();
+    private final Map<UUID, Product> productMap;
+    private final Map<UUID, Article> articleMap;
 
     public StorageService() {
-        productMap.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Торт", 598));
-        productMap.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Мясо", 1296));
-        productMap.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Кофе", 813));
-        productMap.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Молоко", 81));
-        productMap.put(UUID.randomUUID(), new SimpleProduct(UUID.randomUUID(), "Вафли", 44));
+        this.productMap = new HashMap<>();
+        this.articleMap = new HashMap<>();
+        this.creatTest();
+    }
 
-        productMap.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Хлопья", 298, 20));
-        productMap.put(UUID.randomUUID(), new DiscountedProduct(UUID.randomUUID(), "Колбаса", 536, 2));
+    public void creatTest() {
+        Product cake = new SimpleProduct(UUID.randomUUID(), "Торт", 598);
+        Product kofi = new SimpleProduct(UUID.randomUUID(), "Кофе", 813);
+        Product meat = new SimpleProduct(UUID.randomUUID(), "Мясо", 1296);
+        Product orange = new SimpleProduct(UUID.randomUUID(), "Апельсин", 44);
 
-        productMap.put(UUID.randomUUID(), new FixPriceProduct(UUID.randomUUID(), "Сникерс"));
+        Product sausage = new DiscountedProduct(UUID.randomUUID(), "Колбаса", 536, 2);
+        Product flakes = new DiscountedProduct(UUID.randomUUID(), "Хлопья", 298, 20);
 
-        articleMap.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Торт", "Жиры 20%, Белки 25%, Углеводы 55%"));
-        articleMap.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Кофе", "Кофеин 4%, Эфирные масла 20%, Углеводы 50%"));
-        articleMap.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Мясо", "Жиры 12%, Белки 17%, Углеводы 69%"));
-        articleMap.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Мясо-птицы", "Жиры 16%, Белки 13%, Углеводы 70%"));
-        articleMap.put(UUID.randomUUID(), new Article(UUID.randomUUID(), "Колбаса", "Жиры 16%, Белки 13%, Углеводы 70%"));
+        Product snickers = new FixPriceProduct(UUID.randomUUID(), "Сникерс");
+
+        Article cake1 = new Article(UUID.randomUUID(), "Торт", "Жиры 20%, Белки 25%, Углеводы 55%");
+        Article meatBeard = new Article(UUID.randomUUID(), "Мясо-птицы", "Жиры 16%, Белки 13%, Углеводы 70%");
+
+        productMap.put(cake.getId(), cake);
+        productMap.put(kofi.getId(), kofi);
+        productMap.put(meat.getId(), meat);
+        productMap.put(orange.getId(), orange);
+
+        productMap.put(sausage.getId(), sausage);
+        productMap.put(flakes.getId(), flakes);
+
+        productMap.put(snickers.getId(), snickers);
+
+        articleMap.put(cake1.getId(), cake1);
+        articleMap.put(meatBeard.getId(), meatBeard);
     }
 
     public Collection<Product> getProductMap() {
@@ -54,9 +69,7 @@ public class StorageService {
     }
 
     public List<UUID> allPrintProduct() {
-        return productMap.values().stream()
-                .map(Product::getId)
-                .toList();  // метод для отображения id
+        return productMap.keySet().stream().toList();
     }
 
 }

@@ -8,10 +8,7 @@ import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
 import org.skypro.skyshop.service.UserBasket;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,16 +18,17 @@ import java.util.stream.Stream;
 
 
 @RestController
+@RequestMapping("/shop")
 public class ShopController {
 
     private final SearchService searchService;
     private final StorageService storageService;
     private final BasketService basketService;
 
-    public ShopController(BasketService basketService) {
+    public ShopController(BasketService basketService, SearchService searchService, StorageService storageService) {
         this.basketService = basketService;
-        this.searchService = new SearchService();
-        this.storageService = new StorageService();
+        this.searchService = searchService;
+        this.storageService = storageService;
     }
 
     @GetMapping("/products")
@@ -54,12 +52,12 @@ public class ShopController {
     @GetMapping("/basket/{id}")
     public String addProduct(@PathVariable("id") UUID id) {
         basketService.addBasket(id);
-        return "Продукт " + id + " успешно добавлен";
+        return "Продукт успешно добавлен";
     }
 
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
-        return basketService.getUserBasket();
+        return basketService.getUserBaskets();
     }
 
     @GetMapping("/id")

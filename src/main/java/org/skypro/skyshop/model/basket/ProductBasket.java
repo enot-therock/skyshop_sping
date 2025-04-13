@@ -1,6 +1,7 @@
 package org.skypro.skyshop.model.basket;
 
 import org.skypro.skyshop.model.product.Product;
+import org.skypro.skyshop.service.StorageService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -16,8 +17,12 @@ public class ProductBasket {
         this.products = new HashMap<>();
     }
 
-    public void addProductBasket(UUID id) {
-        products.put(id, products.get(id));
+    public void addProductBasket(UUID product) {
+        if (products.containsKey(product)) {
+            products.put(product, products.get(product) + 1);
+        } else {
+            products.put(product, 1);
+        }
     }
 
     public Map<UUID, Integer> allProducts() {
