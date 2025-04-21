@@ -1,13 +1,12 @@
 package org.skypro.skyshop.controller;
 
-import org.skypro.skyshop.error.NoSuchProductException;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.product.Product;
 import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.service.BasketService;
 import org.skypro.skyshop.service.SearchService;
 import org.skypro.skyshop.service.StorageService;
-import org.skypro.skyshop.service.UserBasket;
+import org.skypro.skyshop.model.basket.UserBasket;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -51,17 +50,12 @@ public class ShopController {
 
     @GetMapping("/basket/{id}")
     public String addProduct(@PathVariable("id") UUID id) {
-        basketService.addBasket(id);
+        basketService.addProduct(id);
         return "Продукт успешно добавлен";
     }
 
     @GetMapping("/basket")
     public UserBasket getUserBasket() {
         return basketService.getUserBaskets();
-    }
-
-    @GetMapping("/id")
-    public void idd() {
-        System.out.println(storageService.allPrintProduct());  // метод отображения id
     }
 }

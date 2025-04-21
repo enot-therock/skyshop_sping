@@ -1,4 +1,4 @@
-package org.skypro.skyshop.service;
+package org.skypro.skyshop.model.basket;
 
 import org.skypro.skyshop.model.product.Product;
 
@@ -16,7 +16,7 @@ public class BasketItem {
         return amount;
     }
 
-    public Product getProducts() {
+    public Product getProduct() {
         return products;
     }
 
