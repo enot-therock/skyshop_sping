@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -28,39 +29,80 @@ public class SearchServiceTest {
 
     @Mock
     private StorageService storageService;
+    private SearchResult searchResult;
 
     @InjectMocks
     private SearchService searchService;
 
     @Test
     void whenThereIsNoObject_ThenStorageReturnsIsNull() {
-        String searchText = "Лаваш";
+        String search = "Авокадо";
         Map<UUID, Product> productMap = new HashMap<>();
         Map<UUID, Article> articleMap = new HashMap<>();
+
+        productMap.put(UUID.randomUUID(), null);
         productMap.put(UUID.randomUUID(), null);
         articleMap.put(UUID.randomUUID(), null);
 
-        try {
-            Mockito.when(storageService.SearchableStorage()).thenThrow(NullPointerException.class);
-        } catch (NullPointerException e) {
-            System.out.println("Список продуктов пустой");
-        }
+        Collection<SearchResult> expectedResults = storageService.SearchableStorage().stream()
+                .filter(v -> v.searchableName().toLowerCase().contains(search.toLowerCase()))
+                .map(SearchResult::fromSearchable)
+                .collect(Collectors.toCollection(ArrayList::new));
 
-        assertEquals(searchService.search(searchText), searchText);
+        Mockito.when(searchService.search(search)).thenReturn(expectedResults);
+
+        Collection<SearchResult> actualResults = searchService.search(search);
+
+        assertTrue(expectedResults.isEmpty());
+        assertTrue(actualResults.isEmpty());
     }
 
+//    @Test
+//    void whenThereIsNoObject_ThenStorageReturnsIsBlank() {
+//        String search = "Авокадо";
+//        Map<UUID, Product> productMap = new HashMap<>();
+//        Map<UUID, Article> articleMap = new HashMap<>();
+//        Product cake = new SimpleProduct(UUID.randomUUID(), "Торт", 598);
+//        Product kofi = new SimpleProduct(UUID.randomUUID(), "Кофе", 813);
+//        Article meatBeard = new Article(UUID.randomUUID(), "Мясо-птицы", "Углеводы 70%");
+//        productMap.put(UUID.randomUUID(), cake);
+//        productMap.put(UUID.randomUUID(), kofi);
+//        articleMap.put(UUID.randomUUID(), meatBeard);
+//
+//        Collection<SearchResult> results = storageService.SearchableStorage().stream()
+//                .filter(v -> v.searchableName().toLowerCase().contains(search.toLowerCase()))
+//                .map(SearchResult::fromSearchable)
+//                .collect(Collectors.toCollection(ArrayList::new));
+//
+//        Mockito.when(searchService.search(search)).thenReturn(results);
+//
+//        assertEquals(searchService.search(search), results);
+//    }
+
     @Test
-    void whenThereIsNoObject_ThenStorageReturnsIsBlank() {
-        String searchText = "Лаваш";
+    void whenThereIsGiveObject_ThenStorageReturnsObject() {
+        String search = "Торт";
         Map<UUID, Product> productMap = new HashMap<>();
         Map<UUID, Article> articleMap = new HashMap<>();
-        Product product = new SimpleProduct(UUID.randomUUID(), "сыр", 12);
-        Article article = new Article(UUID.randomUUID(), "краб", "камчатский");
-        productMap.put(UUID.randomUUID(), product);
-        articleMap.put(UUID.randomUUID(), article);
 
-        Mockito.when(storageService.SearchableStorage()).thenReturn(List.of(product, article));
+        Product cake = new SimpleProduct(UUID.randomUUID(), "Торт", 598);
+        Product kofi = new SimpleProduct(UUID.randomUUID(), "Кофе", 813);
+        Article meatBeard = new Article(UUID.randomUUID(), "Мясо-птицы", "Углеводы 70%");
 
-        assertEquals(searchService.search(searchText), searchText);
+        productMap.put(cake.getId(), cake);
+        productMap.put(kofi.getId(), kofi);
+        articleMap.put(meatBeard.getId(), meatBeard);
+
+        Collection<SearchResult> expectedResults = storageService.SearchableStorage().stream()
+                .filter(v -> v.searchableName().toLowerCase().contains(search.toLowerCase()))
+                .map(SearchResult::fromSearchable)
+                .collect(Collectors.toCollection(ArrayList::new));
+
+        Mockito.when(searchService.search(search)).thenReturn(expectedResults);
+
+        Collection<SearchResult> actualResults = searchService.search(search);
+
+        assertEquals(expectedResults, actualResults);
+        assertTrue(!expectedResults.isEmpty());
     }
 }
