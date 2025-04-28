@@ -8,13 +8,11 @@ public class DiscountedProduct extends Product implements Comparable<Searchable>
 
     protected int basePrice;
     protected double discount;
-    private final UUID id;
 
     public DiscountedProduct(UUID id, String productName, int basePrice, double discount) {
         super(id, productName);
         this.basePrice = basePrice;
         this.discount = discount;
-        this.id = id;
         if (basePrice < 1) {
             throw new IllegalArgumentException("Указанная цена недействительна");
         }

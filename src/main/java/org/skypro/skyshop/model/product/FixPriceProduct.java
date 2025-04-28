@@ -7,11 +7,9 @@ import java.util.UUID;
 public class FixPriceProduct extends Product implements Comparable<Searchable> {
 
     protected final int FIX_PRICE = 99;
-    private final UUID id;
 
     public FixPriceProduct(UUID id, String productName) {
         super(id, productName);
-        this.id = id;
     }
 
     @Override

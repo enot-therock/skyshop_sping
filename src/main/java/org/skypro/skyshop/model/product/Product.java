@@ -26,12 +26,12 @@ public abstract class Product implements Searchable {
         return productName;
     }
 
+    public abstract int getPrice();
+
     @Override
     public String toString() {
         return getProduct() + ": " + getPrice();
     }
-
-    public abstract int getPrice();
 
     public abstract boolean isSpecial();
 
@@ -64,5 +64,4 @@ public abstract class Product implements Searchable {
     public int hashCode() {
         return Objects.hashCode(productName);
     }
-
 }

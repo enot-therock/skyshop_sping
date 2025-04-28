@@ -7,12 +7,10 @@ import java.util.UUID;
 public class SimpleProduct extends Product implements Comparable<Searchable> {
 
     protected int price;
-    private final UUID id;
 
     public SimpleProduct(UUID id, String productName, int price) {
         super(id, productName);
         this.price = price;
-        this.id = id;
         if (price < 1) {
             throw new IllegalArgumentException("Указанная цена недействительна");
         }
