@@ -1,7 +1,5 @@
 package org.skypro.skyshop.service;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.skypro.skyshop.model.article.Article;
 import org.skypro.skyshop.model.product.DiscountedProduct;
 import org.skypro.skyshop.model.product.FixPriceProduct;
@@ -61,19 +59,11 @@ public class StorageService {
         return articleMap.values().stream().toList();
     }
 
-    public Collection<Searchable> SearchableStorage() {
+    public Collection<Searchable> searchableStorage() {
         return Stream.concat(productMap.values().stream(), articleMap.values().stream()).toList();
     }
 
     public Optional<Product> getProductById(UUID id) {
         return Optional.ofNullable(productMap.get(id));
-    }
-
-    public void addProduct(Product product) {
-        productMap.put(product.getId(), product);
-    }
-
-    public void addArticle(Article article) {
-        articleMap.put(article.getId(), article);
     }
 }

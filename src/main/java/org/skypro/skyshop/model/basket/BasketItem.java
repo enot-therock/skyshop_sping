@@ -1,7 +1,9 @@
 package org.skypro.skyshop.model.basket;
 
+import lombok.Getter;
 import org.skypro.skyshop.model.product.Product;
 
+@Getter
 public class BasketItem {
 
     private final Product products;
@@ -19,5 +21,4 @@ public class BasketItem {
     public Product getProduct() {
         return products;
     }
-
 }

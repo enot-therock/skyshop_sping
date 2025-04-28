@@ -1,5 +1,6 @@
 package org.skypro.skyshop.service;
 
+import org.skypro.skyshop.error.NoSuchProductException;
 import org.skypro.skyshop.model.search.SearchResult;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class SearchService {
     }
 
     public Collection<SearchResult> search(String searchText) {
-        return storageService.SearchableStorage().stream()
+        return storageService.searchableStorage().stream()
                 .filter(v -> v.searchableName().toLowerCase().contains(searchText.toLowerCase()))
                 .map(SearchResult::fromSearchable)
                 .collect(Collectors.toCollection(ArrayList::new));
